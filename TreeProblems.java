@@ -27,7 +27,22 @@ public class TreeProblems {
     // *several* lines of code. Hint: create two temporary TreeSets and utilize the
     // methods retainAll(), addAll(), and removeAll(). But in the end, get something to work.
 
-    return setA;
+      Set<Integer> tempSet1 = new TreeSet<>();
+      Set<Integer> tempSet2 = new TreeSet<>();
+      Set<Integer> unionSet = new TreeSet<>();
+        //Add all the set values to the three sets
+      tempSet1.addAll(setA);
+      tempSet2.addAll(setB);
+      unionSet.addAll(tempSet1);
+        //Since we want the values NOT in the intersection
+      //We retain only values in both first
+      unionSet.retainAll(tempSet2);
+
+      //then we combine the temp sets together to retain values in both
+      tempSet1.addAll(tempSet2);
+    //then we remove all the intersection values from the overall combined set
+      tempSet1.removeAll(unionSet);
+      return tempSet1;
   }
 
 
