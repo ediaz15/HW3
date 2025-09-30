@@ -1,6 +1,7 @@
 
 /*
- * *** YOUR NAME GOES HERE / YOUR SECTION NUMBER ***
+ * Erick Diaz COMP 272 002
+
  *
  * This java file is a Java object implementing simple AVL Tree.
  * You are to complete the deleteElement method.
@@ -361,6 +362,9 @@ class LUC_AVLTree {
          * code for each. You can also look at the method InsertElement, as it has do
          * do many of the same things as this method.
          */
+
+        //Negative is right heavy, Positive is left heavy
+        //check current NODE and CHILD NODE BF to dictate what rotation to use [DO THE IN ORDER SUCCESSOR NODE!]
 
         return node;
     }

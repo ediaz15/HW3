@@ -1,5 +1,5 @@
 /*
- * *** YOUR NAME GOES HERE / YOUR SECTION NUMBER ***
+ * Erick Diaz COMP 272 002
  *
  * This java file contains several simple tree problems that need to be
  * codified. These routines  must use the TreeMap and TreeSet library
@@ -40,10 +40,22 @@ public class TreeProblems {
 
   public static void removeEven(Map<Integer, String> treeMap) {
 
-    // INSERT CODE HERE.
+    //Create a Set for keys in the treeMap
+      //newTreeMap to only put in key,value pairs where the treeMap's key is odd
+      Set<Integer> keyValues = treeMap.keySet();
+      Map<Integer, String> newTreeMap = new TreeMap<>();
+      for (int i : keyValues) {
+          if (i % 2 != 0) {
+              newTreeMap.put(i, treeMap.get(i));
+          }
+      }
 
+      //delete treeMap then just putAll values from newTreeMap to only store odd key, value pairs
+      treeMap.clear();
+      treeMap.putAll(newTreeMap);
     return;
   }
+
 
 
   /**
@@ -55,9 +67,17 @@ public class TreeProblems {
 
   public boolean treesEqual(Map<Integer, String> tree1,Map<Integer, String> tree2 ) {
 
-    // INSERT CODE HERE
+      //iterate over one tree, getting its keys and values, then check if the other tree contains key and value
+        //moment a key/value pair isnt equal, break and return false!
+      boolean isEqual = true;
+      for(int i: tree1.keySet()){
+          if(!(tree2.containsKey(i) && tree2.containsValue(tree1.get(i)))){
+              isEqual = false;
+              return isEqual;
+          }
+      }
 
-    return false;
+    return isEqual;
 
   }
 
