@@ -365,7 +365,67 @@ class LUC_AVLTree {
 
         //Negative is right heavy, Positive is left heavy
         //check current NODE and CHILD NODE BF to dictate what rotation to use [DO THE IN ORDER SUCCESSOR NODE!]
+        //using the three cases, call the appropriate rotations if the bf calc requires it (dictates what rotations too)
+        //everytime we change things, we MUST update height and check the bf
 
+        if(node == null){
+            return null;
+        }
+
+        //subtree of current node we are in!
+        //Since its a binary search tree, we go left or right based on value (lesser -> left, greater -> right)
+        if(value < node.value){
+            node.leftChild = deleteElement(value, node.leftChild); //go to leftSubNode
+        } else if (value > node.value){
+            node.rightChild = deleteElement(value, node.rightChild); //go to rightSubNode
+        } else {
+            //we found our target node BUT its a leaf node in this case
+            //if we are a leaf node
+            if (node.rightChild == null && node.leftChild == null) {
+                return null;
+            }
+
+            // if theres no leftSubNode
+            if (node.leftChild == null) {
+                return node.rightChild;
+                //if theres no rightSubNode
+            } else if (node.rightChild == null) {
+                return node.leftChild;
+
+            } else { //the node has TWO SUB NODES!
+                //Gotta get the successor Node using inOrderTraversal!
+                Node inOrderNode = minValueNode(node.rightChild);
+                node.value = inOrderNode.value;
+                node.rightChild = deleteElement(inOrderNode.value, node.rightChild);
+            }
+        }
+
+        //Need to update the node height! [got from the other method insertElement()]
+        node.height = (getMaxHeight( getHeight(node.leftChild), getHeight(node.rightChild))) + 1;
+        //Recalculating the BF of the subtree we are IN!
+        int currentBF = getBalanceFactor(node);
+        int leftSubNodeBF = getBalanceFactor(node.leftChild);
+        int rightSubNodeBF = getBalanceFactor(node.rightChild);
+
+        // Check bf of node to determine if a LL or LR Rotation is needed
+        //Positive and over 1 means this is LEFT HEAVY
+        if (currentBF > 1) {
+            if (leftSubNodeBF >= 0) {
+                return LLRotation(node);
+            }
+            else { //Since its left heavy, and the leftSubNodeBF is not positive, then it must be right leaning -> LR rotation
+                return LRRotation(node);
+            }
+        }
+        //Negative and under -1 means RIGHT HEAVY
+        if(currentBF < -1){
+            if (rightSubNodeBF <= 0) {
+                return RRRotation(node);
+            }
+            else { //same idea as the previous block BUT the opposite rotation
+                return RLRotation(node);
+            }
+        }
         return node;
     }
 
